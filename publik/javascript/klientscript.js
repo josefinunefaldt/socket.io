@@ -15,6 +15,7 @@ window.onload = () => {
         let tid = new Date().toISOString().substr(0, 16);   
         let html = `<p>  (${tid}) du skrev ${meddelande}</p>`;
         output.innerHTML = html;
+     
     });
 
     socket.on("chat", (data,nickname)  => {
@@ -28,15 +29,19 @@ window.onload = () => {
         let html = `<p> ${inmat}</p>`;
         output.innerHTML = html;
     })
-
+   
     meddelandet.addEventListener("keypress", function() {
+        typing.innerHTML ="";
         let smeknamn = document.getElementById("namnet");
         socket.emit("typing", smeknamn.value);
     });
+   
  
     socket.on("typing", function(data) {
         typing.innerHTML ="💬" +" " + data + " skriver";
 
      });  
+    
+     
  
 }
