@@ -20,12 +20,12 @@ io.on("connection", (socket) => {
     let anv= socket.id;
     console.log(anv);
     anvandare ++;
-    let nyAnslutning = "En klient anslöt sig till servern! nu är ni" + anvandare;
+    let nyAnslutning = "En klient anslöt sig till servern! nu är ni" + " " + anvandare;
     socket.broadcast.emit("announcement", nyAnslutning );
     
     socket.on('disconnect', function () {
     anvandare--;
-    let avslutad = "En klient lämnade nu är ni" + anvandare;
+    let avslutad = "En klient lämnade nu är ni" + " " + anvandare;
     socket.broadcast.emit("announcement", avslutad );  
           
     });

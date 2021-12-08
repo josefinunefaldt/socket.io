@@ -1,7 +1,12 @@
+
 let socket = io();
  
 window.onload = () => { 
-    //variabel för promt användarnan, while loop not anvandarna promt
+let dittSmeknamn = prompt("Hej och välkommen till chatten! Skriv ditt smeknamn för att ansluta");
+    
+    while (!dittSmeknamn){ 
+        dittSmeknamn = prompt("Du måste skriva ett smeknamn för att komma till chatten!");
+     }
 
     let output = document.getElementById("output");
     let typing = document.getElementById("meddelande");
@@ -10,11 +15,9 @@ window.onload = () => {
     document.getElementById("form").addEventListener("submit", (evt) => {
         evt.preventDefault();
         let meddelande = document.getElementById("input").value;
-        let anvandare = document.getElementById("namnet").value; //
 
-        socket.emit("chat", meddelande,anvandare); 
+        socket.emit("chat", meddelande,dittSmeknamn); 
         document.getElementById("input").value = ""; 
-        document.getElementById("namnet").value = ""; 
         let tid = new Date().toISOString().substr(0, 16);   
         let html = `<p>  (${tid}) du skrev ${meddelande}</p>`;
         output.innerHTML = html; 
@@ -35,16 +38,12 @@ window.onload = () => {
     })
    
     meddelandet.addEventListener("keypress", function() { 
-        let smeknamn = document.getElementById("namnet");
-        socket.emit("typing", smeknamn.value);
-    });
-   
+        socket.emit("typing", dittSmeknamn);
+    })
  
     socket.on("typing", function(data) {
         typing.innerHTML ="💬" +" " + data + " skriver";
 
-     });  
-    
-     
+     });       
  
 }
