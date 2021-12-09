@@ -68,7 +68,7 @@ label {
 #onlineRuta {
   display: none;
   min-width: 7rem;
-  min-height: 6rem;
+  min-height: 10rem;
   background-color: white;
   color: black;
   text-align: left;
@@ -80,6 +80,7 @@ label {
 #onlineDiv:hover #onlineRuta {
   display: inline-block;
 }
-#output {
-  border: solid black 0.5px;
+
+#anvandareSkriver {
+  font-size: 18px;
 }

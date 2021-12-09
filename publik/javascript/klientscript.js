@@ -1,5 +1,3 @@
-
-let socket = io();
  
 window.onload = () => { 
 let dittSmeknamn = prompt("Hej och välkommen till chatten! Skriv ditt smeknamn för att ansluta");
@@ -7,9 +5,11 @@ let dittSmeknamn = prompt("Hej och välkommen till chatten! Skriv ditt smeknamn 
     while (!dittSmeknamn){ 
         dittSmeknamn = prompt("Du måste skriva ett smeknamn för att komma till chatten!");
      }
+     let socket = io();
+     socket.emit("namn", dittSmeknamn);
 
-    let output = document.getElementById("output");
-    let typing = document.getElementById("meddelande");
+    let utskrift = document.getElementById("output");
+    let typing = document.getElementById("anvandareSkriver");
     let meddelandet = document.getElementById("input")   
 
     document.getElementById("form").addEventListener("submit", (evt) => {
@@ -19,22 +19,21 @@ let dittSmeknamn = prompt("Hej och välkommen till chatten! Skriv ditt smeknamn 
         socket.emit("chat", meddelande,dittSmeknamn); 
         document.getElementById("input").value = ""; 
         let tid = new Date().toISOString().substr(0, 16);   
-        let html = `<p>  (${tid}) du skrev ${meddelande}</p>`;
-        output.innerHTML = html; 
+        let html = ` (${tid}) du skrev ${meddelande}`;
+        utskrift.innerHTML = html; 
      
     });
 
     socket.on("chat", (data,nickname)  => {
         typing.innerHTML ="";
         let tid = new Date().toISOString().substr(0, 16); 
-        let html = `<p> (${tid}): ${nickname} skrev ${data}</p>`;
-        output.innerHTML = html;
+        let html = ` (${tid}): ${nickname} skrev ${data}`;
+        utskrift.innerHTML = html;
     })
 
-    socket.on("announcement", (inmat) => {
-        let tid = new Date().toISOString().substr(0, 16); 
-        let html = `<p> ${inmat}</p>`;
-        output.innerHTML = html;
+    socket.on("announcement", (inmat) => { 
+        let html = ` ${inmat}`;
+        utskrift.innerHTML = html;
     })
    
     meddelandet.addEventListener("keypress", function() { 
@@ -44,6 +43,12 @@ let dittSmeknamn = prompt("Hej och välkommen till chatten! Skriv ditt smeknamn 
     socket.on("typing", function(data) {
         typing.innerHTML ="💬" +" " + data + " skriver";
 
-     });       
+     }); 
+     
+     socket.on("uppdateraAnvandare", (data) => {
+        let uppKoppling = document.getElementById("onlineLista");
+        uppKoppling.innerHTML=" online just nu"+ " " + data;
+   
+    });
  
 }

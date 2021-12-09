@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 app.use(express.static("publik"));
-const bodyParser = require("body-parser");
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "/sockets.html");
 });
@@ -14,30 +13,44 @@ console.log("Kör servern på localhost:3000");
 const { Server } = require("socket.io");
 const io = new Server(server);
 
-let anvandare=0;
+let anvandaren=0;
+let inloggadeAnvandare = [];
 io.on("connection", (socket) => { 
 
-    let anv= socket.id;
-    console.log(anv);
-    anvandare ++;
-    let nyAnslutning = "En klient anslöt sig till servern! nu är ni" + " " + anvandare;
+    socket.on("namn", (data) => {
+        console.log("Användaren " + data + " anslöt sig till servern!");
+        socket.anvandare = data;
+        inloggadeAnvandare.push(data);
+        console.log(inloggadeAnvandare);    
+
+    console.log("Användaren " + socket.anvandare + "anslöt");
+    console.log(inloggadeAnvandare);
+    io.emit("uppdateraAnvandare", inloggadeAnvandare);
+       
+    anvandaren ++;
+    let nyAnslutning =  "En klient anslöt sig till servern! Nu är ni" + " "+  "" +anvandaren;
     socket.broadcast.emit("announcement", nyAnslutning );
-    
+     
     socket.on('disconnect', function () {
-    anvandare--;
-    let avslutad = "En klient lämnade nu är ni" + " " + anvandare;
-    socket.broadcast.emit("announcement", avslutad );  
+    anvandaren--;
+    let avslutad = "En klient lämnade nu är ni" + anvandaren;
+    io.emit("announcement", avslutad );
+
+    console.log( socket.anvandare + " avbröt kontakt med servern.");
+    inloggadeAnvandare = inloggadeAnvandare.filter(item => item !== socket.anvandare);
+    socket.broadcast.emit("uppdateraAnvandare", inloggadeAnvandare);
           
     });
 
     socket.on("chat", (data,nickname)  => {
     socket.broadcast.emit("chat", data,nickname);
+    
     });
  
     socket.on("typing", function(data) { 
         socket.broadcast.emit("typing", data);
         });
+   
     });
-
-
+});
 
