@@ -45,7 +45,7 @@ let dittSmeknamn = prompt("Hej och välkommen till chatten! Skriv ditt smeknamn 
 
      }); 
      
-     socket.on("uppdateraAnvandare", (data) => {
+     socket.on("onlineAnvandare", (data) => {
         let uppKoppling = document.getElementById("onlineLista");
         uppKoppling.innerHTML=  data;
    

@@ -25,7 +25,7 @@ io.on("connection", (socket) => {
 
     console.log("Användaren " + socket.anvandare + "anslöt");
     console.log(inloggadeAnvandare);
-    io.emit("uppdateraAnvandare", inloggadeAnvandare);
+    io.emit("onlineAnvandare", inloggadeAnvandare);
        
     anvandaren ++;
     let nyAnslutning =  "En klient anslöt sig till servern! Nu är ni" + " "+  "" +anvandaren;
@@ -38,7 +38,7 @@ io.on("connection", (socket) => {
 
     console.log( socket.anvandare + " avbröt kontakt med servern.");
     inloggadeAnvandare = inloggadeAnvandare.filter(item => item !== socket.anvandare);
-    socket.broadcast.emit("uppdateraAnvandare", inloggadeAnvandare);
+    socket.broadcast.emit("onlineAnvandare", inloggadeAnvandare);
           
     });
 
