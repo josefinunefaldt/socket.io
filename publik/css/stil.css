@@ -1,10 +1,11 @@
+/* stilsättning av hela kroppen*/
 body {
   margin: 0;
   padding-bottom: 3rem;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
 }
-
+/* stilsättning av själva boxen för chatfältet */
 #form {
   background: darkkhaki;
   padding: 0.25rem;
@@ -15,12 +16,9 @@ body {
   display: flex;
   height: 3rem;
   box-sizing: border-box;
-  backdrop-filter: blur(10px);
 }
 
-label {
-  margin-top: 6px;
-}
+/* stilsättning av textfältet innanför chatboxen */
 #input {
   border: none;
   padding: 0 1rem;
@@ -28,10 +26,12 @@ label {
   border-radius: 2rem;
   margin: 0.25rem;
 }
+/* stilsättning av textfältet innanför chatboxen */
 #input,
 :focus {
   outline: none;
 }
+/* stilsättning av knappen "skicka" */
 #form > button {
   background: #333;
   border: none;
@@ -41,7 +41,7 @@ label {
   outline: none;
   color: #fff;
 }
-
+/* stilsättning av rutan online */
 #onlineDiv {
   position: fixed;
   width: 6rem;
@@ -54,17 +54,17 @@ label {
   float: left;
   box-shadow: 0 0 12px 1px rgba(0, 0, 0, 0.35);
 }
-
+/* stilsättning av när man för musen över rutan online */
 #onlineDiv:hover {
   background-color: khaki;
   box-shadow: 0 0 0px 0px rgba(0, 0, 0, 0.35);
 }
-
+/* stilsättning av texten online */
 #online {
   font-size: 15px;
   text-align: center;
 }
-
+/* stilsättning av rutan som kommer ner när man för musen över onlinerutan */
 #onlineRuta {
   display: none;
   min-width: 7rem;
@@ -76,25 +76,27 @@ label {
   border: 1px solid black;
   padding: 1rem;
 }
-
+/* en ruta kommer fram när man för musen över onlinerutan */
 #onlineDiv:hover #onlineRuta {
   display: inline-block;
 }
-
+/* utskrift när någon är i skrivande stund */
 #anvandareSkriver {
   font-size: 18px;
 }
 
+/* stilsättning onlinelistan i onlinerutan*/
 ul {
-  list-style: none; /* Remove default bullets */
+  list-style: none;
 }
 
+/* stilsättning av onlinelistan i onlinerutan */
 ul li::before {
-  content: "\2022"; /* Add content: \2022 is the CSS Code/unicode for a bullet */
-  color: green; /* Change the color */
-  font-weight: bold; /* If you want it to be bold */
-  display: inline-block; /* Needed to add space between the bullet and the text */
-  width: 1em; /* Also needed for space (tweak if needed) */
+  content: "\2022";
+  color: green;
+  font-weight: bold;
+  display: inline-block;
+  width: 1em;
   margin-left: -1em;
-  font-size: 35px; /* Also needed for space (tweak if needed) */
+  font-size: 35px;
 }
